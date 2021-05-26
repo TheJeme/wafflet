@@ -10,7 +10,7 @@ body {
 
 .App header {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  background-color: #aa772d;
+  background-color: #db993a;
   height: 10vh;
   min-height: 50px;
   color: white;
@@ -41,7 +41,7 @@ body {
 }
 
 .frontdiv {
-  background-color: #aa772d;
+  background-color: #f4aa41;
   color: white;
   font-family: "Helvetica", Verdana, Geneva, Tahoma, sans-serif;
   align-self: center;
@@ -85,7 +85,7 @@ form {
 
 form button {
   width: 20%;
-  background-color: #f4aa41;
+  background-color: #db993a;
 }
 
 input {
