@@ -9,12 +9,12 @@ function App(params) {
         {params.id === "frontpage" ? (
           <>
             <div />
-            <h1>Wafflet</h1>
+            <h1 className="navheader">Wafflet</h1>
           </>
         ) : (
           <>
             <button onClick={() => window.open(`/`, "_self")}>{"«"}</button>
-            <h1>
+            <h1 className="navheader">
               Wafflet-{params.id[0].toUpperCase() + params.id.substring(1)}
             </h1>
           </>
