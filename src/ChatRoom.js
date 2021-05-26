@@ -53,7 +53,7 @@ function ChatRoom(params) {
         />
 
         <button type="submit" disabled={!formValue}>
-          Send
+          》
         </button>
       </form>
     </>
