@@ -85,7 +85,7 @@ function ChatRoom(params) {
 function emojifyText(text) {
   var emojify = {
     A: "🅰️",
-    B: "B",
+    B: "🧇",
     C: ["©️", "☪️"],
     D: "↩️",
     E: "📧",
@@ -110,6 +110,9 @@ function emojifyText(text) {
     X: ["❎", "❌", "✖️"],
     Y: "🌱",
     Z: "💤",
+    Ä: "👀",
+    Å: "✋🏼",
+    Ö: "💡",
     "!": ["❗️", "❕"],
     "?": ["❓", "❔"],
     "#": "#️⃣",
@@ -128,7 +131,11 @@ function emojifyText(text) {
   };
   var emojifiedText = "";
   for (var i = 0; i < text.length; i++) {
-    emojifiedText += emojify[text.charAt(i).toUpperCase()];
+    let letter = emojify[text.charAt(i).toUpperCase()];
+    if (letter == null) {
+      letter = emojify["B"];
+    }
+    emojifiedText += letter;
   }
   return emojifiedText;
 }
