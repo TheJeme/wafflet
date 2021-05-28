@@ -147,7 +147,7 @@ function ChatMessage(props) {
   return (
     <>
       <div className={`message ${messageClass}`}>
-        <img src={`http://evatar.io/${by}ddg.png`} alt="avatar" />
+        <img src={`http://evatar.io/${by}.png`} alt="avatar" />
         {urlId === "emoji" ? <p>{emojifyText(text)}</p> : <p>{text}</p>}
       </div>
     </>
