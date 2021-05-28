@@ -28,21 +28,21 @@ function App(params) {
               <h1 className="frontheader">Choose chat</h1>
               <button
                 className="frontdiv"
-                onClick={() => window.open(`/general`, "_self")}
+                onClick={() => window.open(`/owo`, "_self")}
               >
-                General
+                OwO
               </button>
               <button
                 className="frontdiv"
-                onClick={() => window.open(`/crypto`, "_self")}
+                onClick={() => window.open(`/emoji`, "_self")}
               >
-                Crypto
+                Emoji
               </button>
               <button
                 className="frontdiv"
-                onClick={() => window.open(`/games`, "_self")}
+                onClick={() => window.open(`/morse`, "_self")}
               >
-                Games
+                Morse
               </button>
             </div>
             <form>

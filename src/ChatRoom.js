@@ -2,6 +2,9 @@ import React, { useRef, useState, useEffect } from "react";
 
 import uniqid from "uniqid";
 
+import morse from "morse";
+import owoify from "owoify-js";
+
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
@@ -27,14 +30,33 @@ function ChatRoom(params) {
   const sendMessage = async (e) => {
     e.preventDefault();
     setFormValue("");
-    await messagesRef.add({
-      text: formValue,
-      by: localStorage.getItem("id"),
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+
+    if (params.id === "owo") {
+      await messagesRef.add({
+        text: owoify(formValue),
+        by: localStorage.getItem("id"),
+        urlId: params.id,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    }
+    if (params.id === "emoji") {
+      await messagesRef.add({
+        text: formValue,
+        by: localStorage.getItem("id"),
+        urlId: params.id,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    }
+    if (params.id === "morse") {
+      await messagesRef.add({
+        text: morse.encode(formValue),
+        by: localStorage.getItem("id"),
+        urlId: params.id,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    }
     dummy.current.scrollIntoView({ behavior: "smooth" });
   };
-
   return (
     <>
       <main>
@@ -60,15 +82,66 @@ function ChatRoom(params) {
   );
 }
 
-function ChatMessage(props) {
-  const { text, by } = props.message;
-  const messageClass = by === localStorage.getItem("id") ? "sent" : "received";
+function emojifyText(text) {
+  var emojify = {
+    A: "🅰️",
+    B: "B",
+    C: ["©️", "☪️"],
+    D: "↩️",
+    E: "📧",
+    F: "F",
+    G: "⛽️",
+    H: "♓️",
+    I: "ℹ️",
+    J: "☔",
+    K: "K",
+    L: "🕒",
+    M: ["Ⓜ️", "♏️", "♍️", "〽"],
+    N: "📈",
+    O: ["🅾️", "⭕️"],
+    P: "🅿️",
+    Q: "Q",
+    R: "®️",
+    S: ["⚡️"],
+    T: "✝️",
+    U: "⛎",
+    V: "♈️",
+    W: "〰️",
+    X: ["❎", "❌", "✖️"],
+    Y: "🌱",
+    Z: "💤",
+    "!": ["❗️", "❕"],
+    "?": ["❓", "❔"],
+    "#": "#️⃣",
+    "*": "*️⃣",
+    "+": "➕",
+    0: "0️⃣",
+    1: "1️⃣",
+    2: "2️⃣",
+    3: "3️⃣",
+    4: "4️⃣",
+    5: "5️⃣",
+    6: "6️⃣",
+    7: "7️⃣",
+    8: "8️⃣",
+    9: "9️⃣",
+  };
+  var emojifiedText = "";
+  for (var i = 0; i < text.length; i++) {
+    emojifiedText += emojify[text.charAt(i).toUpperCase()];
+  }
+  return emojifiedText;
+}
 
+function ChatMessage(props) {
+  const { text, by, urlId } = props.message;
+  const messageClass = by === localStorage.getItem("id") ? "sent" : "received";
+  console.log(urlId);
   return (
     <>
       <div className={`message ${messageClass}`}>
         <img src={`http://evatar.io/${by}ddg.png`} alt="avatar" />
-        <p>{text}</p>
+        {urlId === "emoji" ? <p>{emojifyText(text)}</p> : <p>{text}</p>}
       </div>
     </>
   );

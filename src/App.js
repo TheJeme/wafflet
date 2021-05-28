@@ -12,14 +12,14 @@ function App() {
           <Route exact path="/">
             <Layout id="frontpage" />
           </Route>
-          <Route path="/general">
-            <Layout id="general" />
+          <Route path="/owo">
+            <Layout id="owo" />
           </Route>
-          <Route path="/crypto">
-            <Layout id="crypto" />
+          <Route path="/morse">
+            <Layout id="morse" />
           </Route>
-          <Route path="/games">
-            <Layout id="games" />
+          <Route path="/emoji">
+            <Layout id="emoji" />
           </Route>
         </Switch>
       </Router>
