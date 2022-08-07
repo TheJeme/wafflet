@@ -21,7 +21,7 @@ function ChatRoom(params) {
 
   const dummy = useRef();
   const messagesRef = firebase.firestore().collection(params.id);
-  const query = messagesRef.orderBy("createdAt").limit(100);
+  const query = messagesRef.orderBy("createdAt").limit(1000);
 
   const [messages] = useCollectionData(query, { idField: "id" });
 
@@ -38,18 +38,23 @@ function ChatRoom(params) {
         urlId: params.id,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       });
-    }
-    if (params.id === "emoji") {
+    } else if (params.id === "emoji") {
       await messagesRef.add({
         text: formValue,
         by: localStorage.getItem("id"),
         urlId: params.id,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       });
-    }
-    if (params.id === "morse") {
+    } else if (params.id === "morse") {
       await messagesRef.add({
         text: morse.encode(formValue),
+        by: localStorage.getItem("id"),
+        urlId: params.id,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    } else {
+      await messagesRef.add({
+        text: formValue,
         by: localStorage.getItem("id"),
         urlId: params.id,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -70,7 +75,7 @@ function ChatRoom(params) {
         <input
           value={formValue}
           onChange={(e) => setFormValue(e.target.value)}
-          maxLength="500"
+          maxLength="1000"
           placeholder="Type a message"
         />
 
@@ -143,14 +148,11 @@ function emojifyText(text) {
 function ChatMessage(props) {
   const { text, by, urlId } = props.message;
   const messageClass = by === localStorage.getItem("id") ? "sent" : "received";
-  console.log(urlId);
   return (
-    <>
-      <div className={`message ${messageClass}`}>
-        <img src={`https://spryte.herokuapp.com/${by}.png`} alt="avatar" />
-        {urlId === "emoji" ? <p>{emojifyText(text)}</p> : <p>{text}</p>}
-      </div>
-    </>
+    <div className={`message ${messageClass}`}>
+      <img src={`https://spryte.herokuapp.com/${by}.png`} alt="avatar" />
+      {urlId === "emoji" ? <p>{emojifyText(text)}</p> : <p>{text}</p>}
+    </div>
   );
 }
 

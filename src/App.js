@@ -10,16 +10,10 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Layout id="frontpage" />
+            <Layout />
           </Route>
-          <Route path="/owo">
-            <Layout id="owo" />
-          </Route>
-          <Route path="/morse">
-            <Layout id="morse" />
-          </Route>
-          <Route path="/emoji">
-            <Layout id="emoji" />
+          <Route path="/:id">
+            <Layout />
           </Route>
         </Switch>
       </Router>
