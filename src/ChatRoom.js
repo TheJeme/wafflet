@@ -27,8 +27,6 @@ function ChatRoom(params) {
     console.log("bruh?");
     dummy.current.scrollIntoView({
       behavior: "smooth",
-      block: "end",
-      inline: "nearest",
     });
   }, [messages]);
 
