@@ -1,9 +1,13 @@
 body {
   background-color: #61441a;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 .App {
   text-align: center;
+  width: 100vw;
   max-width: 728px;
   margin: 0 auto;
 }
@@ -37,7 +41,13 @@ body {
 .frontheader {
   color: white;
   font-family: "Helvetica", Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 4rem;
+  font-size: 3.6rem;
+}
+
+.frontheader-alt {
+  color: white;
+  font-family: "Helvetica", Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 2.2rem;
 }
 
 .frontdiv {
@@ -61,9 +71,8 @@ main {
 }
 
 main::-webkit-scrollbar {
-  width: 0.25rem;
+  width: 0.36rem;
 }
-
 
 main::-webkit-scrollbar-thumb {
   background: #fff;
@@ -104,16 +113,12 @@ button {
   background-color: #aa772d;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 15px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
   font-size: 1.25rem;
-}
-
-.navheader {
-  margin-right: 4vh;
 }
 
 button:disabled {
@@ -132,7 +137,7 @@ p {
   margin-bottom: 12px;
   line-height: 24px;
   padding: 10px 20px;
-  border-radius: 25px;
+  border-radius: 20px;
   position: relative;
   color: white;
   overflow-wrap: anywhere;
@@ -143,11 +148,12 @@ p {
   font-size: 1.1rem;
   display: flex;
   align-items: center;
-  margin-top: 2vh;
+  margin-bottom: 10px;
 }
 
 .sent {
   flex-direction: row-reverse;
+  align-items: flex-end;
 }
 
 .sent p {
@@ -163,8 +169,8 @@ p {
 }
 
 img {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  margin: 2px 5px;
+  margin: 10px 8px;
 }

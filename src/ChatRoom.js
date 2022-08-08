@@ -1,7 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 
-import uniqid from "uniqid";
-
 import morse from "morse";
 import owoify from "owoify-js";
 
@@ -12,20 +10,27 @@ import "firebase/analytics";
 
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
-function ChatRoom(params) {
-  useEffect(() => {
-    if (localStorage.getItem("id") === null) {
-      localStorage.setItem("id", uniqid());
-    }
-  }, []);
+import { customAlphabet } from "nanoid";
+const nanoid = customAlphabet("1234567890abcdefghijklmnopqrstuvwxyz", 24);
 
+function ChatRoom(params) {
   const dummy = useRef();
   const messagesRef = firebase.firestore().collection(params.id);
+  const [formValue, setFormValue] = useState("");
   const query = messagesRef.orderBy("createdAt").limit(1000);
-
   const [messages] = useCollectionData(query, { idField: "id" });
 
-  const [formValue, setFormValue] = useState("");
+  useEffect(() => {
+    if (localStorage.getItem("id") === null) {
+      localStorage.setItem("id", nanoid());
+    }
+    console.log("bruh?");
+    dummy.current.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+      inline: "nearest",
+    });
+  }, [messages]);
 
   const sendMessage = async (e) => {
     e.preventDefault();

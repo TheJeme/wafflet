@@ -9,6 +9,7 @@
     "emoji-alphabet": "^1.0.3",
     "firebase": "^8.6.2",
     "morse": "^0.1.0",
+    "nanoid": "^4.0.0",
     "owoify-js": "^1.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

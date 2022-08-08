@@ -1,10 +1,11 @@
 import React from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { FaShareSquare } from "react-icons/fa";
-
-import uniqid from "uniqid";
+import { FiArrowLeft, FiShare2 } from "react-icons/fi";
 
 import ChatRoom from "./ChatRoom";
+
+import { customAlphabet } from "nanoid";
+const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz", 6);
 
 function App() {
   const params = useParams();
@@ -15,23 +16,38 @@ function App() {
       <header>
         {!params?.id ? (
           <>
-            <div />
-            <h1 className="navheader">Wafflet</h1>
+            <img
+              style={{ visibility: "hidden" }}
+              src={`https://spryte.herokuapp.com/${localStorage.getItem(
+                "id"
+              )}.png`}
+              alt="avatar"
+            />
+            <h1>Wafflet</h1>
+            <img
+              src={`https://spryte.herokuapp.com/${localStorage.getItem(
+                "id"
+              )}.png`}
+              alt="avatar"
+            />
           </>
         ) : (
           <>
-            <button onClick={() => history.push("")}>{"«"}</button>
-            <h1
-              className="navheader clickable"
+            <FiArrowLeft
+              size={40}
+              className="clickable"
+              onClick={() => history.push("")}
+            />
+            <h1>Wafflet-{params.id}</h1>
+            <FiShare2
+              size={40}
+              className="clickable"
               onClick={() =>
                 navigator.clipboard.writeText(
-                  `wafflet.netlify.com/${params.id}`
+                  `https://wafflet.netlify.com/${params.id}`
                 )
               }
-            >
-              Wafflet-{params.id}
-            </h1>
-            <FaShareSquare />
+            />
           </>
         )}
       </header>
@@ -41,8 +57,11 @@ function App() {
           <>
             <div>
               <h1 className="frontheader">Choose chat</h1>
-              <button className="frontdiv" onClick={() => history.push("owo")}>
-                OwO
+              <button
+                className="frontdiv"
+                onClick={() => history.push("public")}
+              >
+                Public
               </button>
               <button
                 className="frontdiv"
@@ -57,13 +76,13 @@ function App() {
                 Morse
               </button>
             </div>
+            <h1 className="frontheader-alt">Or</h1>
             <button
               className="frontdiv"
-              onClick={() => history.push(uniqid(6))}
+              onClick={() => history.push(nanoid(6))}
             >
-              Create New Chat Room
+              Create New Private Chat
             </button>
-            <input placeholder="Join by id" />
           </>
         ) : (
           <ChatRoom id={params.id} />
