@@ -24,7 +24,6 @@ function ChatRoom(params) {
     if (localStorage.getItem("id") === null) {
       localStorage.setItem("id", nanoid());
     }
-    console.log("bruh?");
     dummy.current.scrollIntoView({
       behavior: "smooth",
     });
