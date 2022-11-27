@@ -152,7 +152,7 @@ function ChatMessage(props) {
   const messageClass = by === localStorage.getItem("id") ? "sent" : "received";
   return (
     <div className={`message ${messageClass}`}>
-      <img src={`https://spryte.herokuapp.com/${by}.png`} alt="avatar" />
+      <img src={`https://evatar.io/${by}.png`} alt="avatar" />
       {urlId === "emoji" ? <p>{emojifyText(text)}</p> : <p>{text}</p>}
     </div>
   );
