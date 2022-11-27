@@ -18,14 +18,14 @@ function App() {
           <>
             <img
               style={{ visibility: "hidden" }}
-              src={`https://spryte.herokuapp.com/${localStorage.getItem(
+              src={`https://evatar.io/${localStorage.getItem(
                 "id"
               )}.png`}
               alt="avatar"
             />
             <h1>Wafflet</h1>
             <img
-              src={`https://spryte.herokuapp.com/${localStorage.getItem(
+              src={`https://evatar.io/${localStorage.getItem(
                 "id"
               )}.png`}
               alt="avatar"
