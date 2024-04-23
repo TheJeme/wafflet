@@ -1,18 +1,14 @@
 body {
   background-color: #61441a;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   overflow: hidden;
-}
-
-.App {
   text-align: center;
   width: 100vw;
   max-width: 728px;
-  margin: 0 auto;
 }
 
-.App header {
+header {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-color: #db993a;
   height: 10vh;
@@ -30,7 +26,7 @@ body {
   box-sizing: border-box;
 }
 
-.App section {
+section {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,19 +34,19 @@ body {
   background-color: rgb(40, 37, 53);
 }
 
-.frontheader {
+.front-header {
   color: white;
   font-family: "Helvetica", Verdana, Geneva, Tahoma, sans-serif;
   font-size: 3.6rem;
 }
 
-.frontheader-alt {
+.front-header-alt {
   color: white;
   font-family: "Helvetica", Verdana, Geneva, Tahoma, sans-serif;
   font-size: 2.2rem;
 }
 
-.frontdiv {
+.front-div {
   background-color: #f4aa41;
   color: white;
   font-family: "Helvetica", Verdana, Geneva, Tahoma, sans-serif;
@@ -106,7 +102,7 @@ input {
   color: white;
   outline: none;
   border: none;
-  padding: 0 10px;
+  padding: 0 20px;
 }
 
 button {
@@ -169,8 +165,8 @@ p {
 }
 
 img {
-  width: 44px;
-  height: 44px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  margin: 10px 8px;
+  margin-right: 8px;
 }

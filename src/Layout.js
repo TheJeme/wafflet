@@ -1,15 +1,13 @@
 import React from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { FiArrowLeft, FiShare2 } from "react-icons/fi";
-
+import { useParams, useNavigate } from "react-router-dom";
+import { FiArrowLeft } from "react-icons/fi";
 import ChatRoom from "./ChatRoom";
-
 import { customAlphabet } from "nanoid";
-const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz", 6);
+const nanoid = customAlphabet("abcdefghkmnopqrstuvwxyz", 8);
 
 function App() {
   const params = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -18,16 +16,12 @@ function App() {
           <>
             <img
               style={{ visibility: "hidden" }}
-              src={`https://evatar.io/${localStorage.getItem(
-                "id"
-              )}.png`}
+              src={`https://robohash.org/${localStorage.getItem("uid")}`}
               alt="avatar"
             />
             <h1>Wafflet</h1>
             <img
-              src={`https://evatar.io/${localStorage.getItem(
-                "id"
-              )}.png`}
+              src={`https://robohash.org/${localStorage.getItem("uid")}`}
               alt="avatar"
             />
           </>
@@ -36,54 +30,21 @@ function App() {
             <FiArrowLeft
               size={40}
               className="clickable"
-              onClick={() => history.push("")}
+              onClick={() => navigate("/")}
             />
-            <h1>Wafflet-{params.id}</h1>
-            <FiShare2
-              size={40}
-              className="clickable"
-              onClick={() =>
-                navigator.clipboard.writeText(
-                  `https://wafflet.netlify.com/${params.id}`
-                )
-              }
-            />
+            <h1>Chat-{params.id}</h1>
           </>
         )}
       </header>
 
       <section>
         {!params?.id ? (
-          <>
-            <div>
-              <h1 className="frontheader">Choose chat</h1>
-              <button
-                className="frontdiv"
-                onClick={() => history.push("public")}
-              >
-                Public
-              </button>
-              <button
-                className="frontdiv"
-                onClick={() => history.push("emoji")}
-              >
-                Emoji
-              </button>
-              <button
-                className="frontdiv"
-                onClick={() => history.push("morse")}
-              >
-                Morse
-              </button>
-            </div>
-            <h1 className="frontheader-alt">Or</h1>
-            <button
-              className="frontdiv"
-              onClick={() => history.push(nanoid(6))}
-            >
-              Create New Private Chat
-            </button>
-          </>
+          <button
+            className="front-div"
+            onClick={() => navigate(nanoid(6))}
+          >
+            Create new chat
+          </button>
         ) : (
           <ChatRoom id={params.id} />
         )}

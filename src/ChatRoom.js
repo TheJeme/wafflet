@@ -1,29 +1,28 @@
 import React, { useRef, useState, useEffect } from "react";
-
-import morse from "morse";
-import owoify from "owoify-js";
-
-import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/auth";
-import "firebase/analytics";
-
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc, query, orderBy, limit, serverTimestamp } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
-import { customAlphabet } from "nanoid";
-const nanoid = customAlphabet("1234567890abcdefghijklmnopqrstuvwxyz", 24);
-
 function ChatRoom(params) {
+  const app = initializeApp({
+    apiKey: "AIzaSyDn0CsqD1u4fpK0hhoSYeQP5HSpRHXyroA",
+    authDomain: "wafflet-chat.firebaseapp.com",
+    projectId: "wafflet-chat",
+    storageBucket: "wafflet-chat.appspot.com",
+    messagingSenderId: "1077477497384",
+    appId: "1:1077477497384:web:cf5c28be958a23c9bd731d",
+    measurementId: "G-H4XBJXBC0X",
+  });
+
+  const firestore = getFirestore(app);
+
   const dummy = useRef();
-  const messagesRef = firebase.firestore().collection(params.id);
+  const messagesRef = collection(firestore, params.id);
   const [formValue, setFormValue] = useState("");
-  const query = messagesRef.orderBy("createdAt").limit(1000);
-  const [messages] = useCollectionData(query, { idField: "id" });
+  const messagesQuery = query(messagesRef, orderBy("createdAt"), limit(1000));
+  const [messages] = useCollectionData(messagesQuery, { idField: "id" });
 
   useEffect(() => {
-    if (localStorage.getItem("id") === null) {
-      localStorage.setItem("id", nanoid());
-    }
     dummy.current.scrollIntoView({
       behavior: "smooth",
     });
@@ -31,45 +30,19 @@ function ChatRoom(params) {
 
   const sendMessage = async (e) => {
     e.preventDefault();
+    const uid = localStorage.getItem("uid");
     setFormValue("");
-
-    if (params.id === "owo") {
-      await messagesRef.add({
-        text: owoify(formValue),
-        by: localStorage.getItem("id"),
-        urlId: params.id,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      });
-    } else if (params.id === "emoji") {
-      await messagesRef.add({
-        text: formValue,
-        by: localStorage.getItem("id"),
-        urlId: params.id,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      });
-    } else if (params.id === "morse") {
-      await messagesRef.add({
-        text: morse.encode(formValue),
-        by: localStorage.getItem("id"),
-        urlId: params.id,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      });
-    } else {
-      await messagesRef.add({
-        text: formValue,
-        by: localStorage.getItem("id"),
-        urlId: params.id,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      });
-    }
+    await addDoc(messagesRef, {
+      text: formValue,
+      uid: uid,
+      createdAt: serverTimestamp(),
+    });
     dummy.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
     <>
       <main>
-        {messages &&
-          messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
-
+        {messages?.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
         <span ref={dummy}></span>
       </main>
 
@@ -89,71 +62,13 @@ function ChatRoom(params) {
   );
 }
 
-function emojifyText(text) {
-  var emojify = {
-    A: "🅰️",
-    B: "🧇",
-    C: "☪️",
-    D: "↩️",
-    E: "📧",
-    F: "🔥",
-    G: "⛽️",
-    H: "♓️",
-    I: "🍔",
-    J: "☔",
-    K: "✨",
-    L: "🕒",
-    M: "♏️",
-    N: "📈",
-    O: "⭕️",
-    P: "🅿️",
-    Q: "🪁",
-    R: "🧵",
-    S: "⚡️",
-    T: "✝️",
-    U: "⛎",
-    V: "♈️",
-    W: "🐰",
-    X: "❌",
-    Y: "🌱",
-    Z: "💤",
-    Ä: "👀",
-    Å: "✋🏼",
-    Ö: "💡",
-    "!": "🆗",
-    "?": "🆒",
-    "#": "⚠️",
-    "*": "🔔",
-    "+": "💹",
-    0: "🈷️",
-    1: "🈶",
-    2: "🈚",
-    3: "🈸",
-    4: "🈺",
-    5: "🈳",
-    6: "🈴",
-    7: "🈹",
-    8: "🈯",
-    9: "🈂️",
-  };
-  var emojifiedText = "";
-  for (var i = 0; i < text.length; i++) {
-    let letter = emojify[text.charAt(i).toUpperCase()];
-    if (letter == null) {
-      letter = emojify["B"];
-    }
-    emojifiedText += letter;
-  }
-  return emojifiedText;
-}
-
 function ChatMessage(props) {
-  const { text, by, urlId } = props.message;
-  const messageClass = by === localStorage.getItem("id") ? "sent" : "received";
+  const { text, uid } = props.message;
+  const messageClass = uid === localStorage.getItem("uid") ? "sent" : "received";
   return (
     <div className={`message ${messageClass}`}>
-      <img src={`https://evatar.io/${by}.png`} alt="avatar" />
-      {urlId === "emoji" ? <p>{emojifyText(text)}</p> : <p>{text}</p>}
+      <img src={`https://robohash.org/${uid}`} alt="avatar" />
+      <p>{text}</p>
     </div>
   );
 }
