@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, query, orderBy, limit, serverTimestamp } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { customAlphabet } from "nanoid";
+const nanoid = customAlphabet("1234567890abcdefghkmnopqrstuvwxyz", 36);
 
 function ChatRoom(params) {
   const app = initializeApp({
@@ -17,10 +19,11 @@ function ChatRoom(params) {
   const firestore = getFirestore(app);
 
   const dummy = useRef();
-  const messagesRef = collection(firestore, params.id);
+  const messagesRef = collection(firestore, "c-"+params.id);
   const [formValue, setFormValue] = useState("");
   const messagesQuery = query(messagesRef, orderBy("createdAt"), limit(1000));
   const [messages] = useCollectionData(messagesQuery, { idField: "id" });
+  const uid = localStorage.getItem("uid");
 
   useEffect(() => {
     dummy.current.scrollIntoView({
@@ -30,10 +33,10 @@ function ChatRoom(params) {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    const uid = localStorage.getItem("uid");
     setFormValue("");
     await addDoc(messagesRef, {
       text: formValue,
+      id: nanoid(),
       uid: uid,
       createdAt: serverTimestamp(),
     });
@@ -42,7 +45,7 @@ function ChatRoom(params) {
   return (
     <>
       <main>
-        {messages?.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+        {messages?.map((msg) => <ChatMessage key={msg.id} msg={msg} uid={uid} />)}
         <span ref={dummy}></span>
       </main>
 
@@ -62,13 +65,12 @@ function ChatRoom(params) {
   );
 }
 
-function ChatMessage(props) {
-  const { text, uid } = props.message;
-  const messageClass = uid === localStorage.getItem("uid") ? "sent" : "received";
+function ChatMessage({msg, uid}) {
+  const messageClass = msg.uid === uid ? "sent" : "received";
   return (
     <div className={`message ${messageClass}`}>
-      <img src={`https://robohash.org/${uid}`} alt="avatar" />
-      <p>{text}</p>
+      <img src={`https://robohash.org/${msg.uid}`} alt="avatar" />
+      <p>{msg.text}</p>
     </div>
   );
 }

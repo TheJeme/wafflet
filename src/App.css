@@ -1,15 +1,21 @@
+html, body {
+  font-family: "Helvetica", Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  overflow: hidden;
+}
+
 body {
   background-color: #61441a;
   margin: 0 auto;
-  padding: 0;
-  overflow: hidden;
-  text-align: center;
-  width: 100vw;
   max-width: 728px;
 }
 
 header {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-color: #db993a;
   height: 10vh;
   min-height: 50px;
@@ -34,26 +40,30 @@ section {
   background-color: rgb(40, 37, 53);
 }
 
+.start {
+  display: flex;
+  flex-direction: column;
+}
+
 .front-header {
   color: white;
-  font-family: "Helvetica", Verdana, Geneva, Tahoma, sans-serif;
   font-size: 3.6rem;
 }
 
 .front-header-alt {
   color: white;
-  font-family: "Helvetica", Verdana, Geneva, Tahoma, sans-serif;
   font-size: 2.2rem;
 }
 
 .front-div {
   background-color: #f4aa41;
   color: white;
-  font-family: "Helvetica", Verdana, Geneva, Tahoma, sans-serif;
   align-self: center;
   margin: 2vh;
   padding-top: 2vh;
   padding-bottom: 2vh;
+  width: 190px;
+  border-radius: 20px;
 }
 
 main {
@@ -103,6 +113,7 @@ input {
   outline: none;
   border: none;
   padding: 0 20px;
+  box-sizing: border-box;
 }
 
 button {
@@ -115,6 +126,10 @@ button {
   display: inline-block;
   cursor: pointer;
   font-size: 1.25rem;
+}
+
+button:hover {
+  background-color: #f29d24;
 }
 
 button:disabled {
@@ -140,7 +155,6 @@ p {
 }
 
 .message {
-  font-family: "Helvetica", Verdana, Geneva, Tahoma, sans-serif;
   font-size: 1.1rem;
   display: flex;
   align-items: center;
@@ -158,10 +172,29 @@ p {
   text-align: right;
   align-self: flex-end;
 }
+
 .received p {
   background: #f6bb67;
   text-align: left;
   color: white;
+}
+
+.polls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.poll {
+  width: 100%;
+  color: white;
+  background: #f4aa41;
+  border-radius: 20px;
+}
+
+.poll p {
+  margin: 4px;
+  text-align: left;
 }
 
 img {
@@ -169,4 +202,29 @@ img {
   height: 50px;
   border-radius: 50%;
   margin-right: 8px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.option-button {
+  background-color: #f4aa41;
+  color: white;
+  align-self: center;
+  margin: 2vh;
+  width: 50px;
+  height: 50px;
+  border-radius: 20px;
+}
+
+.vote-button {
+  background-color: #f4aa41;
+  color: white;
+  align-self: center;
+  margin: 2vh;
+  width: 80px;
+  height: 52px;
+  border-radius: 20px;
 }
