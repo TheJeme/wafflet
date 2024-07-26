@@ -45,7 +45,10 @@ function ChatRoom(params) {
   return (
     <>
       <main>
-        {messages?.map((msg) => <ChatMessage key={msg.id} msg={msg} uid={uid} />)}
+        {messages?.map((msg) => <div key={msg.id} className={`message ${msg.uid === uid ? "sent" : "received"}`}>
+      <img src={`https://robohash.org/${msg.uid}`} alt="avatar" />
+      <p>{msg.text}</p>
+    </div>)}
         <span ref={dummy}></span>
       </main>
 
@@ -62,16 +65,6 @@ function ChatRoom(params) {
         </button>
       </form>
     </>
-  );
-}
-
-function ChatMessage({msg, uid}) {
-  const messageClass = msg.uid === uid ? "sent" : "received";
-  return (
-    <div className={`message ${messageClass}`}>
-      <img src={`https://robohash.org/${msg.uid}`} alt="avatar" />
-      <p>{msg.text}</p>
-    </div>
   );
 }
 
